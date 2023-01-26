@@ -78,7 +78,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 	st.markdown("""---""")
 
 	####################################################################################
-	
+
 	left_column1, middle_column1, right_column1  = st.columns(3)
 
 	with left_column1:
@@ -127,15 +127,15 @@ with st.form(key = 'form1', clear_on_submit = False):
 		output_RGB_image = cv2.cvtColor(output_HSV_image, cv2.COLOR_HSV2RGB)
 
 		################################################################################
-		
+
 		blue_pixels = np.count_nonzero(mask)
-		
+
 		################################################################################
 		
 		### Calcuate gray scale image
-		
+
 		image_gray = 255 * rgb2gray(raw_image)
-					
+
 		non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
 
 		################################################################################
@@ -152,12 +152,12 @@ with st.form(key = 'form1', clear_on_submit = False):
 		ax['A'].set_title('Uploaded Image', pad = PAD, fontsize = FONTSIZE_TITLE)
 		ax['A'].set_xticks([])
 		ax['A'].set_yticks([])
-		
+
 		#####
-		
+
 		output_RGB_image_temp = output_RGB_image.copy()
 		output_RGB_image_temp[np.all(output_RGB_image_temp == [0, 0, 0], axis = -1)] = [255, 255, 255]
-		
+
 		#####
 
 		ax['B'].imshow(output_RGB_image_temp)

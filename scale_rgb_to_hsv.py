@@ -31,7 +31,7 @@ def scale_rgb_to_hsv(color:str):
     hsv = rgb_to_hsv(rgb)
 
     # Scale the H, S, and V values
-    h = int(hsv[0] * 360)
+    h = int(hsv[0] * 180)
     s = int(hsv[1] * 255)
     v = int(hsv[2])
 
