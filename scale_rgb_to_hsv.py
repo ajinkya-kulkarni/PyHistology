@@ -20,23 +20,20 @@
 
 #######################################################################################################
 
-def read_image(filename):
-    """
-    This function reads an image from a file and converts it from BGR to RGB color space
-    The function returns the RGB image.
+from matplotlib.colors import rgb_to_hsv
+from PIL import ImageColor
 
-    Parameters:
-    - filename (str): The path of the image file.
-    
-    Returns:
-    - image (ndarray): The output RGB image.
-    """
-    if not isinstance(filename, str):
-        raise ValueError("filename should be a string.")
-    if not os.path.isfile(filename):
-        raise ValueError("Invalid file path.")
-    raw_image = cv2.imread(filename, cv2.IMREAD_COLOR)
-    if raw_image is None:
-        raise ValueError("Failed to read image.")
-    image = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
-    return image
+def scale_rgb_to_hsv(color:str):
+    # Get the RGB values of the color
+    rgb = ImageColor.getrgb(color)
+
+    # Convert the RGB values to HSV values
+    hsv = rgb_to_hsv(rgb)
+
+    # Scale the H, S, and V values
+    h = int(hsv[0] * 360)
+    s = int(hsv[1] * 255)
+    v = int(hsv[2])
+
+    # Return the scaled HSV values
+    return (h, s, v)
