@@ -147,7 +147,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 		################################################################################
 
 		mosaic = "AB"
-		fig = plt.figure(figsize = (12, 6), constrained_layout = True, dpi = DPI)
+		fig = plt.figure(figsize = (20, 8), constrained_layout = True, dpi = DPI)
 		ax = fig.subplot_mosaic(mosaic)
 
 		ax['A'].imshow(raw_image)
