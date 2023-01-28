@@ -52,7 +52,7 @@ from rgb_to_hsv import *
 ########################################################################################
 
 PAD = 12
-FONTSIZE_TITLE = 15
+FONTSIZE_TITLE = 12
 
 ########################################################################################
 
@@ -147,7 +147,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 		################################################################################
 
 		mosaic = "AB"
-		fig = plt.figure(figsize = (20, 8), constrained_layout = True, dpi = DPI)
+		fig = plt.figure(figsize = (10, 6), constrained_layout = True, dpi = DPI)
 		ax = fig.subplot_mosaic(mosaic)
 
 		ax['A'].imshow(raw_image)
