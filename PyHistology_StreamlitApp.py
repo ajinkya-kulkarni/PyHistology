@@ -69,6 +69,8 @@ DPI = 500
 
 st.title(':blue[Application for demonstrating the PyHistology package]')
 
+st.caption('For more information, visit https://github.com/ajinkya-kulkarni/PyHistology', unsafe_allow_html = False)
+
 st.markdown("")
 
 ########################################################################################
