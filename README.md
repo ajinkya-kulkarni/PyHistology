@@ -1,3 +1,3 @@
-# PyHistology
-Colorspace based segmentation of Histopathology images.
-First steps towards creating a python based package to calculate amount of staining in Histopathology images.
+## Overview
+
+PyHistology is a python package that uses colorspace-based segmentation to analyze histopathology images. With this package, you can calculate the amount of staining present in histopathology images.
