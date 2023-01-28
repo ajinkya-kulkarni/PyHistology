@@ -27,11 +27,9 @@ import cv2
 
 from PIL import Image
 from PIL import ImageColor
-
 from skimage.color import rgb2gray
 
 import matplotlib.pyplot as plt
-from matplotlib.colors import rgb_to_hsv
 
 import os
 import time
@@ -47,7 +45,11 @@ sys.tracebacklimit = 0
 
 ########################################################################################
 
-from scale_rgb_to_hsv import *
+from hex_to_rgb import *
+
+from rgb_to_hsv import *
+
+########################################################################################
 
 PAD = 15
 FONTSIZE_TITLE = 18
@@ -82,19 +84,21 @@ with st.form(key = 'form1', clear_on_submit = False):
 	left_column1, middle_column1, right_column1  = st.columns(3)
 
 	with left_column1:
-		color = st.color_picker('Pick the lower color bound', '#00f900', label_visibility = "visible", key = '-LowerColorKey-')
+		color = st.color_picker('Pick the lower color bound', '#828DA0', label_visibility = "visible", key = '-LowerColorKey-')
 		LowerColorKey = st.session_state['-LowerColorKey-']
 
-		LowerColorHSV_scaled = scale_rgb_to_hsv(LowerColorKey)
+		LowerColorRGB = hex_to_rgb(LowerColorKey)
+		LowerColorHSV = rgb_to_hsv(LowerColorRGB)
 
 	with middle_column1:
-		color = st.color_picker('Pick the upper color bound', '#00f900', label_visibility = "visible", key = '-HigherColorKey-')
+		color = st.color_picker('Pick the upper color bound', '#003DF9', label_visibility = "visible", key = '-HigherColorKey-')
 		HigherColorKey = st.session_state['-HigherColorKey-']
 
-		HigherColorHSV_scaled = scale_rgb_to_hsv(HigherColorKey)
+		HigherColorRGB = hex_to_rgb(HigherColorKey)
+		HigherColorHSV = rgb_to_hsv(HigherColorRGB)
 
 	with right_column1:
-		st.slider('Threshold value', min_value = 100, max_value = 250, value = 180, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
+		st.slider('Threshold value', min_value = 100, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
 
 	####################################################################################
@@ -120,15 +124,13 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		mask = cv2.inRange(HSV_image, LowerColorHSV_scaled, HigherColorHSV_scaled)
+		mask = cv2.inRange(HSV_image, LowerColorHSV, HigherColorHSV)
+
+		blue_pixels = np.count_nonzero(mask)
 
 		output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
 
 		output_RGB_image = cv2.cvtColor(output_HSV_image, cv2.COLOR_HSV2RGB)
-
-		################################################################################
-
-		blue_pixels = np.count_nonzero(mask)
 
 		################################################################################
 		
@@ -161,7 +163,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 		#####
 
 		ax['B'].imshow(output_RGB_image_temp)
-		ax['B'].set_title('Isolated pixels', pad = PAD, fontsize = FONTSIZE_TITLE)
+		ax['B'].set_title('Isolated pixels, ' + str(percentage_area) + '%', pad = PAD, fontsize = FONTSIZE_TITLE)
 		ax['B'].set_xticks([])
 		ax['B'].set_yticks([])
 
