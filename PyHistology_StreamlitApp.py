@@ -126,7 +126,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		mask = cv2.inRange(HSV_image, LowerColorHSV, HigherColorHSV)
 
-		blue_pixels = np.count_nonzero(mask)
+		pixels_of_interest = np.count_nonzero(mask)
 
 		output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
 
@@ -142,7 +142,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		percentage_area = np.round(100 * blue_pixels / non_white_pixels, 2)
+		percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
 
 		################################################################################
 
