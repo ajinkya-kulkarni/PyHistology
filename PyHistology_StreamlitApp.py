@@ -127,22 +127,41 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
 
+		################################################################################
+
 		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
+
 		if (len(LowerBoundKey) == 0):
 			ErrorMessage = st.error('Lower bound should not be empty', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
 			st.stop()
-		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
+
 		LowerBoundNumbers =  np.int_(extract_consecutive_digits(LowerBoundKey))
 
+		if (LowerBoundNumbers[0] > 180 or LowerBoundNumbers[1] > 255 or LowerBoundNumbers[2] > 255):
+			ErrorMessage = st.error('Parameters for the lower bound of the color are restricted to H<180, S<255 and V<255', icon = None)
+			time.sleep(SleepTime)
+			ErrorMessage.empty()
+			st.stop()
+
+		################################################################################
+
 		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
+		
 		if (len(UpperBoundKey) == 0):
 			ErrorMessage = st.error('Upper bound should not be empty', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
 			st.stop()
+
 		UpperBoundNumbers =  np.int_(extract_consecutive_digits(UpperBoundKey))
+
+		if (UpperBoundNumbers[0] > 180 or UpperBoundNumbers[1] > 255 or UpperBoundNumbers[2] > 255):
+			ErrorMessage = st.error('Parameters for the upper bound of the color are restricted to H<180, S<255 and V<255', icon = None)
+			time.sleep(SleepTime)
+			ErrorMessage.empty()
+			st.stop()
 
 		################################################################################
 
