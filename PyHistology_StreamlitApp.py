@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+# UX/UI recommendations provided by Radhika Bhagwat (radhika.bhagwat3@gmail.com, Product Designer)
+
 ########################################################################################
 
 import streamlit as st
@@ -70,7 +72,7 @@ st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout =
 
 st.title(':blue[Application for demonstrating the PyHistology package]')
 
-st.caption('For more information, visit https://github.com/ajinkya-kulkarni/PyHistology', unsafe_allow_html = False)
+st.caption('For more information or feedback, visit https://github.com/ajinkya-kulkarni/PyHistology', unsafe_allow_html = False)
 
 st.markdown("")
 
@@ -91,11 +93,14 @@ with st.form(key = 'form1', clear_on_submit = False):
 		plot_HSV_space('HSV_space.png', xnumber = 10, ynumber = 8, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
 
 	with right_column1:
-		st.text_input('Hue, Saturation, Value values for the lower bound', value = '', placeholder = 'Example: 80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
+
+		st.caption(':blue[Refer to the chart on the left to estimate the Hue and Saturation co-ordinates of the desired color to be extracted.]', unsafe_allow_html = False)
+
+		st.text_input('Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example: 80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
 
 		st.markdown("")
 
-		st.text_input('Hue, Saturation, Value values for the upper bound', value = '', placeholder = 'Example: 120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
+		st.text_input('Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example: 120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
 
 		st.markdown("")
 
@@ -120,21 +125,21 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
 
-		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
-		LowerBoundNumbers =  np.int_(extract_consecutive_digits(LowerBoundKey))
 		if (str(LowerBoundKey) == ""):
 			ErrorMessage = st.error('Lower bound should not be empty', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
 			st.stop()
+		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
+		LowerBoundNumbers =  np.int_(extract_consecutive_digits(LowerBoundKey))
 
-		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
-		UpperBoundNumbers =  np.int_(extract_consecutive_digits(UpperBoundKey))
 		if (str(UpperBoundKey) == ""):
 			ErrorMessage = st.error('Upper bound should not be empty', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
 			st.stop()
+		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
+		UpperBoundNumbers =  np.int_(extract_consecutive_digits(UpperBoundKey))
 
 		################################################################################
 
