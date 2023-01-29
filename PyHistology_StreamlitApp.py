@@ -98,11 +98,11 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		st.caption(':blue[Refer to the chart on the left to estimate the Hue and Saturation co-ordinates of the desired color to be extracted.]', unsafe_allow_html = False)
 
-		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=80, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
+		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=100, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
 
 		st.markdown("")
 
-		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=120, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
+		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=140, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
 
 		st.markdown("")
 
@@ -168,6 +168,12 @@ with st.form(key = 'form1', clear_on_submit = False):
 		raw_image_from_pillow = Image.open(uploaded_file)
 
 		raw_image = np.array(raw_image_from_pillow)
+
+		if raw_image.shape[-1] > 3:
+			ErrorMessage = st.error('Image has more than 3 channels. Please upload an image with 3 channels', icon = None)
+			time.sleep(SleepTime)
+			ErrorMessage.empty()
+			st.stop()
 
 		HSV_image = cv2.cvtColor(raw_image, cv2.COLOR_RGB2HSV)
 
