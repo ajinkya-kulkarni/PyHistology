@@ -74,7 +74,7 @@ st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout =
 
 st.title(':blue[Application for demonstrating the PyHistology package]')
 
-st.caption('For more information or feedback, visit https://github.com/ajinkya-kulkarni/PyHistology', unsafe_allow_html = False)
+st.caption('For more information or to give feedback, visit https://github.com/ajinkya-kulkarni/PyHistology', unsafe_allow_html = False)
 
 st.markdown("")
 
