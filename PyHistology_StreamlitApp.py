@@ -91,11 +91,11 @@ with st.form(key = 'form1', clear_on_submit = False):
 		plot_HSV_space('HSV_space.png', xnumber = 10, ynumber = 8, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
 
 	with right_column1:
-		st.text_input('Hue, Saturation, Value values for the lower bound', value = '80, 20, 10', placeholder = '80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
+		st.text_input('Hue, Saturation, Value values for the lower bound', value = '', placeholder = 'Example: 80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
 
 		st.markdown("")
 
-		st.text_input('Hue, Saturation, Value values for the upper bound', value = '120, 255, 255', placeholder = '120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
+		st.text_input('Hue, Saturation, Value values for the upper bound', value = '', placeholder = 'Example: 120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
 
 		st.markdown("")
 
