@@ -98,11 +98,11 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		st.caption(':blue[Refer to the chart on the left to estimate the Hue and Saturation co-ordinates of the desired color to be extracted.]', unsafe_allow_html = False)
 
-		st.text_input('Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H, S, V = 80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
+		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=80, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
 
 		st.markdown("")
 
-		st.text_input('Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H, S, V = 120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
+		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=120, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
 
 		st.markdown("")
 
@@ -148,7 +148,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 		################################################################################
 
 		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
-		
+
 		if (len(UpperBoundKey) == 0):
 			ErrorMessage = st.error('Upper bound should not be empty', icon = None)
 			time.sleep(SleepTime)
