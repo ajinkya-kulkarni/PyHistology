@@ -92,7 +92,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = 10, ynumber = 8, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
+		plot_HSV_space('HSV_space.png', xnumber = 10, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
 
 	with right_column1:
 
