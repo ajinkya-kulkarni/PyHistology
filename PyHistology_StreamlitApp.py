@@ -99,7 +99,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		st.markdown("")
 
-		st.slider('Threshold value', min_value = 50, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
+		st.slider('Threshold value in pixels above which pixels are not evaluated', min_value = 50, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
 
 	st.markdown("""---""")
 
@@ -169,7 +169,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 		################################################################################
 
 		mosaic = "AB"
-		fig = plt.figure(figsize = (7, 5), constrained_layout = True, dpi = DPI)
+		fig = plt.figure(figsize = (14, 10), constrained_layout = True, dpi = DPI)
 		ax = fig.subplot_mosaic(mosaic)
 
 		ax['A'].imshow(raw_image)
