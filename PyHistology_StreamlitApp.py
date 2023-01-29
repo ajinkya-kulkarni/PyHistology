@@ -53,6 +53,8 @@ from extract_digits import *
 
 ########################################################################################
 
+SleepTime = 2
+
 PAD = 12
 FONTSIZE_TITLE = 12
 DPI = 500
@@ -96,11 +98,11 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		st.caption(':blue[Refer to the chart on the left to estimate the Hue and Saturation co-ordinates of the desired color to be extracted.]', unsafe_allow_html = False)
 
-		st.text_input('Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example: 80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
+		st.text_input('Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: 80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
 
 		st.markdown("")
 
-		st.text_input('Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example: 120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
+		st.text_input('Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: 120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
 
 		st.markdown("")
 
@@ -125,7 +127,8 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
 
-		if (str(LowerBoundKey) == ""):
+		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
+		if (len(LowerBoundKey) == 0):
 			ErrorMessage = st.error('Lower bound should not be empty', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
@@ -133,12 +136,12 @@ with st.form(key = 'form1', clear_on_submit = False):
 		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
 		LowerBoundNumbers =  np.int_(extract_consecutive_digits(LowerBoundKey))
 
-		if (str(UpperBoundKey) == ""):
+		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
+		if (len(UpperBoundKey) == 0):
 			ErrorMessage = st.error('Upper bound should not be empty', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
 			st.stop()
-		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
 		UpperBoundNumbers =  np.int_(extract_consecutive_digits(UpperBoundKey))
 
 		################################################################################
