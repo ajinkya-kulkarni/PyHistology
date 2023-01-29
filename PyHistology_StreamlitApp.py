@@ -45,14 +45,15 @@ sys.tracebacklimit = 0
 
 ########################################################################################
 
-from hex_to_rgb import *
+from make_HSV_space_image import *
 
-from rgb_to_hsv import *
+from extract_digits import *
 
 ########################################################################################
 
 PAD = 12
 FONTSIZE_TITLE = 12
+DPI = 500
 
 ########################################################################################
 
@@ -63,7 +64,7 @@ image_bytes = BytesIO(image_data)
 
 st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout = "wide", initial_sidebar_state = "expanded", menu_items = {'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de', 'Report a bug': 'mailto:ajinkya.kulkarni@mpinat.mpg.de', 'About': 'This is a application for demonstrating the PyHistology package. Developed, tested and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni at the MPI-NAT, Goettingen'})
 
-DPI = 500
+########################################################################################
 
 # Title of the web app
 
@@ -83,25 +84,24 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	####################################################################################
 
-	left_column1, middle_column1, right_column1  = st.columns(3)
+	left_column1, right_column1  = st.columns(2)
 
 	with left_column1:
-		color = st.color_picker('Pick the lower color bound', '#828DA0', label_visibility = "visible", key = '-LowerColorKey-')
-		LowerColorKey = st.session_state['-LowerColorKey-']
 
-		LowerColorRGB = hex_to_rgb(LowerColorKey)
-		LowerColorHSV = rgb_to_hsv(LowerColorRGB)
-
-	with middle_column1:
-		color = st.color_picker('Pick the upper color bound', '#003DF9', label_visibility = "visible", key = '-HigherColorKey-')
-		HigherColorKey = st.session_state['-HigherColorKey-']
-
-		HigherColorRGB = hex_to_rgb(HigherColorKey)
-		HigherColorHSV = rgb_to_hsv(HigherColorRGB)
+		plot_HSV_space('HSV_space.png', xnumber = 10, ynumber = 8, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
 
 	with right_column1:
-		st.slider('Threshold value', min_value = 100, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
-		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
+		st.text_input('Hue, Saturation, Value values for the lower bound', value = '80, 20, 10', placeholder = '80, 20, 10', label_visibility = "visible", key = '-LowerBoundKey-')
+
+		st.markdown("")
+
+		st.text_input('Hue, Saturation, Value values for the upper bound', value = '120, 255, 255', placeholder = '120, 255, 255', label_visibility = "visible", key = '-UpperBoundKey-')
+
+		st.markdown("")
+
+		st.slider('Threshold value', min_value = 50, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
+
+	st.markdown("""---""")
 
 	####################################################################################
 
@@ -118,6 +118,26 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	if submitted:
 
+		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
+
+		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
+		LowerBoundNumbers =  np.int_(extract_consecutive_digits(LowerBoundKey))
+		if (str(LowerBoundKey) == ""):
+			ErrorMessage = st.error('Lower bound should not be empty', icon = None)
+			time.sleep(SleepTime)
+			ErrorMessage.empty()
+			st.stop()
+
+		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
+		UpperBoundNumbers =  np.int_(extract_consecutive_digits(UpperBoundKey))
+		if (str(UpperBoundKey) == ""):
+			ErrorMessage = st.error('Upper bound should not be empty', icon = None)
+			time.sleep(SleepTime)
+			ErrorMessage.empty()
+			st.stop()
+
+		################################################################################
+
 		raw_image_from_pillow = Image.open(uploaded_file)
 
 		raw_image = np.array(raw_image_from_pillow)
@@ -126,7 +146,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		mask = cv2.inRange(HSV_image, LowerColorHSV, HigherColorHSV)
+		mask = cv2.inRange(HSV_image, LowerBoundNumbers, UpperBoundNumbers)
 
 		pixels_of_interest = np.count_nonzero(mask)
 
@@ -149,7 +169,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 		################################################################################
 
 		mosaic = "AB"
-		fig = plt.figure(figsize = (10, 6), constrained_layout = True, dpi = DPI)
+		fig = plt.figure(figsize = (7, 5), constrained_layout = True, dpi = DPI)
 		ax = fig.subplot_mosaic(mosaic)
 
 		ax['A'].imshow(raw_image)

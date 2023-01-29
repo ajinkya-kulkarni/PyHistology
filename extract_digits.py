@@ -20,29 +20,20 @@
 
 ########################################################################################
 
-import cv2
-import numpy as np
-
-def rgb_to_hsv(array):
+def extract_consecutive_digits(lst):
 	"""
-	Convert RGB color to HSV color.
-
-	Parameters:
-	array (list or numpy.ndarray): RGB values of the color in the format [R, G, B].
-
-	Returns:
-	numpy.ndarray: HSV values of the color in the format [H, S, V].
+	Extracts consecutive digits from a list of strings and returns them as a list of integers.
+	Ignores non-digit characters in the input list.
 	"""
-	if not isinstance(array, (list, np.ndarray)):
-		raise TypeError("Input must be a list or numpy array")
-	if len(array) != 3:
-		raise ValueError("Invalid RGB array format")
-
-	# Convert RGB to HSV
-	rgb = np.array([[array]], dtype = np.uint8)
-	hsv_raw = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
-
-	#squeeze the array and round it to nearest int
-	hsv_color = np.rint(hsv_raw.squeeze()).astype(int)
-
-	return hsv_color
+	result = []
+	current_sequence = []
+	for i in lst:
+		if i.isdigit():
+			current_sequence.append(i)
+		else:
+			if current_sequence:
+				result.append(int("".join(current_sequence)))
+				current_sequence = []
+	if current_sequence:
+		result.append(int("".join(current_sequence)))
+	return result
