@@ -55,9 +55,9 @@ from extract_digits import *
 
 SleepTime = 2
 
-PAD = 12
-FONTSIZE_TITLE = 12
-DPI = 500
+PAD = 10
+FONTSIZE_TITLE = 10
+DPI = 600
 
 ########################################################################################
 
@@ -92,7 +92,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = 10, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
+		plot_HSV_space('HSV_space.png', xnumber = 12, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
 
 	with right_column1:
 
@@ -201,28 +201,32 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		mosaic = "AB"
-		fig = plt.figure(figsize = (14, 10), constrained_layout = True, dpi = DPI)
-		ax = fig.subplot_mosaic(mosaic)
+		left_column2, right_column2  = st.columns(2)
 
-		ax['A'].imshow(raw_image)
-		ax['A'].set_title('Uploaded Image', pad = PAD, fontsize = FONTSIZE_TITLE)
-		ax['A'].set_xticks([])
-		ax['A'].set_yticks([])
+		with left_column2:
+
+			fig = plt.figure(figsize = (7, 5), constrained_layout = True, dpi = DPI)
+
+			plt.imshow(raw_image)
+			plt.title('Uploaded Image', pad = PAD, fontsize = FONTSIZE_TITLE)
+			plt.xticks([])
+			plt.yticks([])
+
+			st.pyplot(fig)
 
 		#####
 
-		output_RGB_image_temp = output_RGB_image.copy()
-		output_RGB_image_temp[np.all(output_RGB_image_temp == [0, 0, 0], axis = -1)] = [255, 255, 255]
+		with right_column2:
 
-		#####
+			output_RGB_image_temp = output_RGB_image.copy()
+			output_RGB_image_temp[np.all(output_RGB_image_temp == [0, 0, 0], axis = -1)] = [255, 255, 255]
 
-		ax['B'].imshow(output_RGB_image_temp)
-		ax['B'].set_title('Isolated pixels, ' + str(percentage_area) + '%', pad = PAD, fontsize = FONTSIZE_TITLE)
-		ax['B'].set_xticks([])
-		ax['B'].set_yticks([])
+			plt.imshow(output_RGB_image_temp)
+			plt.title('Isolated pixels, ' + str(percentage_area) + '%', pad = PAD, fontsize = FONTSIZE_TITLE)
+			plt.xticks([])
+			plt.yticks([])
 
-		st.pyplot(fig)
+			st.pyplot(fig)
 
 		################################################################################
 
