@@ -20,12 +20,13 @@
 
 ########################################################################################
 
+import streamlit as st
+
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-import streamlit as st
 
-def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE):
+def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSIZE):
 	"""
 	Plots the HSV color space using the given image.
 
@@ -57,7 +58,7 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE):
 		ylist_ticks.append(str(int(i/2)))
 
 	# Create the figure and plot the image
-	fig = plt.figure(figsize=(7, 5), constrained_layout=True, dpi=DPI)
+	fig = plt.figure(figsize=FIGSIZE, constrained_layout=True, dpi=DPI)
 	plt.imshow(np.flipud(HSV_space_image), origin='lower')
 	plt.xticks(xticks_array, xlist_ticks)
 	plt.yticks(yticks_array, ylist_ticks)
@@ -65,4 +66,3 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE):
 	plt.ylabel('Y axis - Hue')
 	plt.title('Hue, Saturation and Value colorspace', pad = PAD, fontsize = FONTSIZE_TITLE)
 	st.pyplot(fig)
-	plt.close()

@@ -55,9 +55,10 @@ from extract_digits import *
 
 SleepTime = 2
 
-PAD = 10
-FONTSIZE_TITLE = 10
-DPI = 600
+PAD = 8
+FONTSIZE_TITLE = PAD
+DPI = 500
+FIGSIZE = (7, 5)
 
 ########################################################################################
 
@@ -92,7 +93,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = 12, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE)
+		plot_HSV_space('HSV_space.png', xnumber = 12, ynumber = 10, DPI = DPI, PAD = PAD, FIGSIZE = FIGSIZE, FONTSIZE_TITLE = FONTSIZE_TITLE)
 
 	with right_column1:
 
@@ -100,9 +101,13 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=100, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
 
+		st.markdown("""---""")
+
 		st.markdown("")
 
 		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=140, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
+
+		st.markdown("""---""")
 
 		st.markdown("")
 
@@ -197,7 +202,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
+		percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 1)
 
 		################################################################################
 
@@ -205,7 +210,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		with left_column2:
 
-			fig = plt.figure(figsize = (7, 5), constrained_layout = True, dpi = DPI)
+			fig = plt.figure(figsize = FIGSIZE, constrained_layout = True, dpi = DPI)
 
 			plt.imshow(raw_image)
 			plt.title('Uploaded Image', pad = PAD, fontsize = FONTSIZE_TITLE)
