@@ -207,6 +207,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 			percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
 
 		except:
+
 			ErrorMessage = st.error('Error with analyzing the image', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
