@@ -93,19 +93,19 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = 12, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
+		plot_HSV_space('HSV_space.png', xnumber = 15, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
 
 	with right_column1:
 
 		st.caption(':blue[Refer to the chart on the left to estimate the Hue and Saturation co-ordinates of the desired color to be extracted.]', unsafe_allow_html = False)
 
-		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=100, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
+		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=110, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
 
 		st.markdown("""---""")
 
 		st.markdown("")
 
-		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=140, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
+		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=130, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
 
 		st.markdown("""---""")
 
