@@ -170,39 +170,47 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		raw_image_from_pillow = Image.open(uploaded_file)
+		try:
 
-		raw_image = np.array(raw_image_from_pillow)
+			raw_image_from_pillow = Image.open(uploaded_file)
 
-		if raw_image.shape[-1] > 3:
-			ErrorMessage = st.error('Image has more than 3 channels. Please upload an image with 3 channels', icon = None)
+			raw_image = np.array(raw_image_from_pillow)
+
+			if raw_image.shape[-1] > 3:
+				ErrorMessage = st.error('Image has more than 3 channels. Please upload an image with 3 channels', icon = None)
+				time.sleep(SleepTime)
+				ErrorMessage.empty()
+				st.stop()
+
+			HSV_image = cv2.cvtColor(raw_image, cv2.COLOR_RGB2HSV)
+
+			################################################################################
+
+			mask = cv2.inRange(HSV_image, LowerBoundNumbers, UpperBoundNumbers)
+
+			pixels_of_interest = np.count_nonzero(mask)
+
+			output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
+
+			output_RGB_image = cv2.cvtColor(output_HSV_image, cv2.COLOR_HSV2RGB)
+
+			################################################################################
+
+			### Calcuate gray scale image
+
+			image_gray = 255 * rgb2gray(raw_image)
+
+			non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
+
+			################################################################################
+
+			percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
+
+		except:
+			ErrorMessage = st.error('Error with analyzing the image', icon = None)
 			time.sleep(SleepTime)
 			ErrorMessage.empty()
 			st.stop()
-
-		HSV_image = cv2.cvtColor(raw_image, cv2.COLOR_RGB2HSV)
-
-		################################################################################
-
-		mask = cv2.inRange(HSV_image, LowerBoundNumbers, UpperBoundNumbers)
-
-		pixels_of_interest = np.count_nonzero(mask)
-
-		output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
-
-		output_RGB_image = cv2.cvtColor(output_HSV_image, cv2.COLOR_HSV2RGB)
-
-		################################################################################
-		
-		### Calcuate gray scale image
-
-		image_gray = 255 * rgb2gray(raw_image)
-
-		non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
-
-		################################################################################
-
-		percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
 
 		################################################################################
 
