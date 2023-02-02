@@ -55,7 +55,7 @@ from extract_digits import *
 
 SleepTime = 2
 
-PAD = 8
+PAD = 10
 FONTSIZE_TITLE = PAD
 DPI = 500
 FIGSIZE = (7, 5)
@@ -93,7 +93,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = 12, ynumber = 10, DPI = DPI, PAD = PAD, FIGSIZE = FIGSIZE, FONTSIZE_TITLE = FONTSIZE_TITLE)
+		plot_HSV_space('HSV_space.png', xnumber = 12, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
 
 	with right_column1:
 
@@ -202,7 +202,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 1)
+		percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
 
 		################################################################################
 
