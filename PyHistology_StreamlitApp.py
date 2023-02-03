@@ -93,7 +93,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	st.markdown(':blue[Threshold value in pixels, above which pixels are not evaluated.]')
 
-	st.slider('Threshold value in pixels, above which pixels are not evaluated.', min_value = 50, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "collapsed", key = '-ThresholdValueKey-')
+	st.slider('Threshold value in pixels, above which pixels are not evaluated.', min_value = 0, max_value = 255, value = 200, step = 5, format = '%d', label_visibility = "collapsed", key = '-ThresholdValueKey-')
 
 	####################################################################################
 
@@ -111,24 +111,24 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 	with middle_column1:
 
-		st.slider('Hue parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 180, value = 110, step = 5, format = '%d', label_visibility = "visible", key = '-LowerHueKey-')
+		st.slider('Hue parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 180, value = 110, step = 1, format = '%d', label_visibility = "visible", key = '-LowerHueKey-')
 		LowerHueKey = int(st.session_state['-LowerHueKey-'])
 
-		st.slider('Saturation parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 5, format = '%d', label_visibility = "visible", key = '-LowerSaturationKey-')
+		st.slider('Saturation parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 1, format = '%d', label_visibility = "visible", key = '-LowerSaturationKey-')
 		LowerSaturationKey = int(st.session_state['-LowerSaturationKey-'])
 
-		st.slider('Value parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 5, format = '%d', label_visibility = "visible", key = '-LowerValueKey-')
+		st.slider('Value parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 1, format = '%d', label_visibility = "visible", key = '-LowerValueKey-')
 		LowerValueKey = int(st.session_state['-LowerValueKey-'])
 
 	with right_column1:
 
-		st.slider('Hue parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 180, value = 130, step = 5, format = '%d', label_visibility = "visible", key = '-HigherHueKey-')
+		st.slider('Hue parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 180, value = 130, step = 1, format = '%d', label_visibility = "visible", key = '-HigherHueKey-')
 		HigherHueKey = int(st.session_state['-HigherHueKey-'])
 
-		st.slider('Saturation parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 5, format = '%d', label_visibility = "visible", key = '-HigherSaturationKey-')
+		st.slider('Saturation parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 1, format = '%d', label_visibility = "visible", key = '-HigherSaturationKey-')
 		HigherSaturationKey = int(st.session_state['-HigherSaturationKey-'])
 
-		st.slider('Value parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 5, format = '%d', label_visibility = "visible", key = '-HigherValueKey-')
+		st.slider('Value parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 1, format = '%d', label_visibility = "visible", key = '-HigherValueKey-')
 		HigherValueKey = int(st.session_state['-HigherValueKey-'])
 
 	####################################################################################
