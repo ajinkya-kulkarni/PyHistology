@@ -46,13 +46,13 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSI
 	HSV_space_image = np.array(HSV_space_image_raw)
 
 	# Create the x-axis ticks and labels
-	xticks_array = list(np.linspace(0, 510, xnumber))
+	xticks_array = list(np.linspace(0, 2*255, xnumber))
 	xlist_ticks = []
 	for i in np.int_(xticks_array):
 		xlist_ticks.append(str(int(i/2)))
 
 	# Create the y-axis ticks and labels
-	yticks_array = list(np.linspace(0, 360, ynumber))
+	yticks_array = list(np.linspace(0, 2*180, ynumber))
 	ylist_ticks = []
 	for i in np.int_(yticks_array):
 		ylist_ticks.append(str(int(i/2)))
@@ -62,7 +62,8 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSI
 	plt.imshow(np.flipud(HSV_space_image), origin='lower')
 	plt.xticks(xticks_array, xlist_ticks)
 	plt.yticks(yticks_array, ylist_ticks)
-	plt.xlabel('X axis - Saturation')
-	plt.ylabel('Y axis - Hue')
-	plt.title('Hue, Saturation and Value colorspace', pad = PAD, fontsize = FONTSIZE_TITLE)
+	plt.xlabel('Saturation')
+	plt.ylabel('Hue')
+	plt.title('Hue and Saturation colorspace', pad = PAD, fontsize = 1.4*FONTSIZE_TITLE)
+
 	st.pyplot(fig)

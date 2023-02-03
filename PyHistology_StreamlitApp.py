@@ -49,16 +49,16 @@ sys.tracebacklimit = 0
 
 from make_HSV_space_image import *
 
-from extract_digits import *
-
 ########################################################################################
 
 SleepTime = 2
 
-PAD = 10
+PAD = 8
 FONTSIZE_TITLE = PAD
 DPI = 500
-FIGSIZE = (7, 5)
+FIGSIZE = (5, 5)
+
+XNUMBER, YNUMBER = 10, 10
 
 ########################################################################################
 
@@ -83,46 +83,60 @@ st.markdown("")
 
 with st.form(key = 'form1', clear_on_submit = False):
 
-	uploaded_file = st.file_uploader("Upload a 2D RGB histopathology image to be analyzed.", type=["tif", "tiff", "png", "jpg", "jpeg"], accept_multiple_files = False, label_visibility = 'visible')
+	st.markdown(':blue[Upload a 2D RGB histopathology image to be analyzed.]')
 
+	uploaded_file = st.file_uploader("Upload a file", type=["tif", "tiff", "png", "jpg", "jpeg"], accept_multiple_files = False, label_visibility = 'collapsed')
+
+	####################################################################################
+	
 	st.markdown("""---""")
+
+	st.markdown(':blue[Threshold value in pixels, above which pixels are not evaluated.]')
+
+	st.slider('Threshold value in pixels, above which pixels are not evaluated.', min_value = 50, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "collapsed", key = '-ThresholdValueKey-')
 
 	####################################################################################
 
-	left_column1, right_column1  = st.columns(2)
+	st.markdown("""---""")
+
+	st.markdown(':blue[Refer to the Hue and Saturation plot below to estimate the Hue and Saturation co-ordinates of the desired color to be extracted. Value goes from 0-255, 0 being the lowest brightness.]')
+
+	st.markdown("")
+
+	left_column1, middle_column1, right_column1  = st.columns(3)
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = 15, ynumber = 10, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
+		plot_HSV_space('HSV_space.png', xnumber = XNUMBER, ynumber = YNUMBER, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
+
+	with middle_column1:
+
+		st.slider('Hue parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 180, value = 110, step = 5, format = '%d', label_visibility = "visible", key = '-LowerHueKey-')
+		LowerHueKey = int(st.session_state['-LowerHueKey-'])
+
+		st.slider('Saturation parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 5, format = '%d', label_visibility = "visible", key = '-LowerSaturationKey-')
+		LowerSaturationKey = int(st.session_state['-LowerSaturationKey-'])
+
+		st.slider('Value parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 5, format = '%d', label_visibility = "visible", key = '-LowerValueKey-')
+		LowerValueKey = int(st.session_state['-LowerValueKey-'])
 
 	with right_column1:
 
-		st.caption(':blue[Refer to the chart on the left to estimate the Hue and Saturation co-ordinates of the desired color to be extracted.]', unsafe_allow_html = False)
+		st.slider('Hue parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 180, value = 130, step = 5, format = '%d', label_visibility = "visible", key = '-HigherHueKey-')
+		HigherHueKey = int(st.session_state['-HigherHueKey-'])
 
-		st.text_input('Comma separated Hue, Saturation, Value parameters for the **lower bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for light blue: H=110, S=20 and V=10', label_visibility = "visible", key = '-LowerBoundKey-')
+		st.slider('Saturation parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 5, format = '%d', label_visibility = "visible", key = '-HigherSaturationKey-')
+		HigherSaturationKey = int(st.session_state['-HigherSaturationKey-'])
 
-		st.markdown("""---""")
-
-		st.markdown("")
-
-		st.text_input('Comma separated Hue, Saturation, Value parameters for the **upper bound** of the desired color. (Value goes from 0-255, 0 being the lowest brightness).', value = '', placeholder = 'Example for dark blue: H=130, S=255 and V=255', label_visibility = "visible", key = '-UpperBoundKey-')
-
-		st.markdown("""---""")
-
-		st.markdown("")
-
-		st.slider('Threshold value in pixels above which pixels are not evaluated', min_value = 50, max_value = 250, value = 200, step = 10, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
-
-	st.markdown("""---""")
+		st.slider('Value parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 5, format = '%d', label_visibility = "visible", key = '-HigherValueKey-')
+		HigherValueKey = int(st.session_state['-HigherValueKey-'])
 
 	####################################################################################
 
 	st.markdown("")
 
 	submitted = st.form_submit_button('Analyze')
-
-	st.markdown("")
-
+	
 	####################################################################################
 
 	if uploaded_file is None:
@@ -132,41 +146,9 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
 
-		################################################################################
+		LowerBoundNumbers =  np.array([LowerHueKey, LowerSaturationKey, LowerValueKey])
 
-		LowerBoundKey = list(st.session_state['-LowerBoundKey-'])
-
-		if (len(LowerBoundKey) == 0):
-			ErrorMessage = st.error('Lower bound should not be empty', icon = None)
-			time.sleep(SleepTime)
-			ErrorMessage.empty()
-			st.stop()
-
-		LowerBoundNumbers =  np.int_(extract_consecutive_digits(LowerBoundKey))
-
-		if (LowerBoundNumbers[0] > 180 or LowerBoundNumbers[1] > 255 or LowerBoundNumbers[2] > 255):
-			ErrorMessage = st.error('Parameters for the lower bound of the color are restricted to H<180, S<255 and V<255', icon = None)
-			time.sleep(SleepTime)
-			ErrorMessage.empty()
-			st.stop()
-
-		################################################################################
-
-		UpperBoundKey = list(st.session_state['-UpperBoundKey-'])
-
-		if (len(UpperBoundKey) == 0):
-			ErrorMessage = st.error('Upper bound should not be empty', icon = None)
-			time.sleep(SleepTime)
-			ErrorMessage.empty()
-			st.stop()
-
-		UpperBoundNumbers =  np.int_(extract_consecutive_digits(UpperBoundKey))
-
-		if (UpperBoundNumbers[0] > 180 or UpperBoundNumbers[1] > 255 or UpperBoundNumbers[2] > 255):
-			ErrorMessage = st.error('Parameters for the upper bound of the color are restricted to H<180, S<255 and V<255', icon = None)
-			time.sleep(SleepTime)
-			ErrorMessage.empty()
-			st.stop()
+		UpperBoundNumbers = np.array([HigherHueKey, HigherSaturationKey, HigherValueKey])
 
 		################################################################################
 
