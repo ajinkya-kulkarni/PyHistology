@@ -73,7 +73,7 @@ st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout =
 
 # Title of the web app
 
-st.title(':blue[Application for demonstrating the PyHistology package]')
+st.title(':blue[Color space segmentation using PyHistology]')
 
 st.caption('For more information or to give feedback, visit https://github.com/ajinkya-kulkarni/PyHistology.', unsafe_allow_html = False)
 
