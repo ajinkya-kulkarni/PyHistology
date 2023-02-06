@@ -47,14 +47,14 @@ sys.tracebacklimit = 0
 
 ########################################################################################
 
-from make_HSV_space_image import *
+from make_HSV_colorspace_image import *
 
 ########################################################################################
 
 SleepTime = 2
 
-PAD = 8
-FONTSIZE_TITLE = PAD
+FONTSIZE_TITLE = 10
+PAD =FONTSIZE_TITLE
 DPI = 500
 FIGSIZE = (5, 5)
 
@@ -83,7 +83,7 @@ st.markdown("")
 
 with st.form(key = 'form1', clear_on_submit = False):
 
-	st.markdown(':blue[Upload a 2D RGB histopathology image to be analyzed.]')
+	st.markdown(':blue[Upload a 2D RGB image to be analyzed.]')
 
 	uploaded_file = st.file_uploader("Upload a file", type=["tif", "tiff", "png", "jpg", "jpeg"], accept_multiple_files = False, label_visibility = 'collapsed')
 
@@ -197,7 +197,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		################################################################################
 
-		left_column2, right_column2  = st.columns(2)
+		left_column2, middle_column1, right_column2  = st.columns(3)
 
 		with left_column2:
 
@@ -212,13 +212,26 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 		#####
 
+		with middle_column1:
+
+			fig = plt.figure(figsize = FIGSIZE, constrained_layout = True, dpi = DPI)
+
+			plt.imshow(HSV_image)
+			plt.title('HSV Image', pad = PAD, fontsize = FONTSIZE_TITLE)
+			plt.xticks([])
+			plt.yticks([])
+
+			st.pyplot(fig)
+
+			#####
+
 		with right_column2:
 
 			output_RGB_image_temp = output_RGB_image.copy()
 			output_RGB_image_temp[np.all(output_RGB_image_temp == [0, 0, 0], axis = -1)] = [255, 255, 255]
 
 			plt.imshow(output_RGB_image_temp)
-			plt.title('Isolated pixels, ' + str(percentage_area) + '%', pad = PAD, fontsize = FONTSIZE_TITLE)
+			plt.title('Isolated pixels from uploaded image, ' + str(percentage_area) + '%', pad = PAD, fontsize = FONTSIZE_TITLE)
 			plt.xticks([])
 			plt.yticks([])
 

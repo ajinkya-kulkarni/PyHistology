@@ -62,8 +62,8 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSI
 	plt.imshow(np.flipud(HSV_space_image), origin='lower')
 	plt.xticks(xticks_array, xlist_ticks)
 	plt.yticks(yticks_array, ylist_ticks)
-	plt.xlabel('Saturation')
-	plt.ylabel('Hue')
-	plt.title('Hue and Saturation colorspace', pad = PAD, fontsize = 1.4*FONTSIZE_TITLE)
+	plt.xlabel('Saturation', fontsize = FONTSIZE_TITLE)
+	plt.ylabel('Hue', fontsize = FONTSIZE_TITLE)
+	plt.title('Hue and Saturation colorspace', pad = PAD, fontsize = FONTSIZE_TITLE)
 
 	st.pyplot(fig)
