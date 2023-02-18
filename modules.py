@@ -20,7 +20,9 @@
 
 ########################################################################################
 
-import streamlit as st
+ # This file contains all the modules/functions necessary for running the streamlit application or the example notebooks.
+
+########################################################################################
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -66,4 +68,6 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSI
 	plt.ylabel('Hue', fontsize = FONTSIZE_TITLE)
 	plt.title('Hue and Saturation colorspace', pad = PAD, fontsize = FONTSIZE_TITLE)
 
-	st.pyplot(fig)
+	return fig
+
+########################################################################################

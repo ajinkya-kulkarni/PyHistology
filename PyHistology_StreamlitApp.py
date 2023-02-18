@@ -47,7 +47,7 @@ sys.tracebacklimit = 0
 
 ########################################################################################
 
-from make_HSV_colorspace_image import *
+from modules import *
 
 ########################################################################################
 
@@ -92,64 +92,71 @@ with st.form(key = 'form1', clear_on_submit = False):
 	
 	st.markdown("""---""")
 
-	st.markdown(':blue[Threshold value in pixels, above which pixels are not evaluated.]')
-
-	st.slider('Threshold value in pixels, above which pixels are not evaluated.', min_value = 0, max_value = 255, value = 200, step = 5, format = '%d', label_visibility = "collapsed", key = '-ThresholdValueKey-')
-
 	####################################################################################
-
-	st.markdown("""---""")
 
 	st.markdown(':blue[Refer to the Hue and Saturation plot below to estimate the Hue and Saturation co-ordinates of the desired color to be extracted. Value goes from 0-255, 0 being the lowest brightness.]')
 
 	st.markdown("")
 
-	left_column1, middle_column1, right_column1  = st.columns(3)
+	left_column1, right_column1  = st.columns(2)
 
 	with left_column1:
 
-		plot_HSV_space('HSV_space.png', xnumber = XNUMBER, ynumber = YNUMBER, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
+		fig = plot_HSV_space('HSV_space.png', xnumber = XNUMBER, ynumber = YNUMBER, DPI = DPI, PAD = PAD, FONTSIZE_TITLE = FONTSIZE_TITLE, FIGSIZE = FIGSIZE)
 
-	with middle_column1:
-
-		st.slider('Hue parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 180, value = 110, step = 1, format = '%d', label_visibility = "visible", key = '-LowerHueKey-')
-		LowerHueKey = int(st.session_state['-LowerHueKey-'])
-
-		st.slider('Saturation parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 1, format = '%d', label_visibility = "visible", key = '-LowerSaturationKey-')
-		LowerSaturationKey = int(st.session_state['-LowerSaturationKey-'])
-
-		st.slider('Value parameter for the **lower bound** of the desired color.', min_value = 0, max_value = 255, value = 10, step = 1, format = '%d', label_visibility = "visible", key = '-LowerValueKey-')
-		LowerValueKey = int(st.session_state['-LowerValueKey-'])
+		st.pyplot(fig)
 
 	with right_column1:
 
-		st.slider('Hue parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 180, value = 130, step = 1, format = '%d', label_visibility = "visible", key = '-HigherHueKey-')
-		HigherHueKey = int(st.session_state['-HigherHueKey-'])
+		st.markdown("")
 
-		st.slider('Saturation parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 1, format = '%d', label_visibility = "visible", key = '-HigherSaturationKey-')
-		HigherSaturationKey = int(st.session_state['-HigherSaturationKey-'])
+		st.slider('**Threshold value** in pixels, above which pixels are not evaluated.', min_value = 0, max_value = 255, value = 200, step = 5, format = '%d', label_visibility = "visible", key = '-ThresholdValueKey-')
 
-		st.slider('Value parameter for the **higher bound** of the desired color.', min_value = 0, max_value = 255, value = 255, step = 1, format = '%d', label_visibility = "visible", key = '-HigherValueKey-')
-		HigherValueKey = int(st.session_state['-HigherValueKey-'])
+		st.slider('**Hue** parameters for the lower & upper bound of the desired color.', min_value = 0, max_value = 180, value = [110, 130], step = 5, format = '%d', label_visibility = "visible", key = '-HueKey-')
+		HueKey = st.session_state['-HueKey-']
+		LowerHueKey = int(HueKey[0])
+		HigherHueKey = int(HueKey[1])
+
+		st.slider('**Saturation** parameters for the lower & upper bound of the desired color.', min_value = 0, max_value = 255, value = [10, 250], step = 5, format = '%d', label_visibility = "visible", key = '-SaturationKey-')
+		SaturationKey = st.session_state['-SaturationKey-']
+		LowerSaturationKey = int(SaturationKey[0])
+		HigherSaturationKey = int(SaturationKey[1])
+
+		st.slider('**Value** parameters for the lower & upper bound of the desired color.', min_value = 0, max_value = 255, value = [10, 250], step = 5, format = '%d', label_visibility = "visible", key = '-ValueKey-')
+		ValueKey = st.session_state['-ValueKey-']
+		LowerValueKey = int(ValueKey[0])
+		HigherValueKey = int(ValueKey[1])
 
 	####################################################################################
 
 	st.markdown("")
 
 	submitted = st.form_submit_button('Analyze')
+
+	st.markdown("")
 	
 	####################################################################################
 
 	if uploaded_file is None:
 		st.stop()
 
+	####################################################################################
+
 	if submitted:
+
+		ProgressBarText = st.empty()
+		ProgressBarText.caption("Analyzing...")
+		ProgressBar = st.progress(0)
+		ProgressBarTime = 0.5
 
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
 
 		LowerBoundNumbers =  np.array([LowerHueKey, LowerSaturationKey, LowerValueKey])
 
 		UpperBoundNumbers = np.array([HigherHueKey, HigherSaturationKey, HigherValueKey])
+
+		time.sleep(ProgressBarTime)
+		ProgressBar.progress(float(1/6))
 
 		################################################################################
 
@@ -159,6 +166,9 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 			raw_image = np.array(raw_image_from_pillow)
 
+			time.sleep(ProgressBarTime)
+			ProgressBar.progress(float(2/6))
+
 			if raw_image.shape[-1] > 3:
 				ErrorMessage = st.error('Image has more than 3 channels. Please upload an image with 3 channels', icon = None)
 				time.sleep(SleepTime)
@@ -166,6 +176,9 @@ with st.form(key = 'form1', clear_on_submit = False):
 				st.stop()
 
 			HSV_image = cv2.cvtColor(raw_image, cv2.COLOR_RGB2HSV)
+
+			time.sleep(ProgressBarTime)
+			ProgressBar.progress(float(3/6))
 
 			################################################################################
 
@@ -175,7 +188,13 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 			output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
 
+			time.sleep(ProgressBarTime)
+			ProgressBar.progress(float(4/6))
+
 			output_RGB_image = cv2.cvtColor(output_HSV_image, cv2.COLOR_HSV2RGB)
+
+			time.sleep(ProgressBarTime)
+			ProgressBar.progress(float(5/6))
 
 			################################################################################
 
@@ -188,6 +207,14 @@ with st.form(key = 'form1', clear_on_submit = False):
 			################################################################################
 
 			percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
+
+			time.sleep(ProgressBarTime)
+			ProgressBar.progress(float(6/6))
+
+			time.sleep(ProgressBarTime)
+
+			ProgressBarText.empty()
+			ProgressBar.empty()
 
 		except:
 
