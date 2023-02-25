@@ -1,4 +1,5 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pyhistology.streamlit.app/)
 
 # Color Space Segmentation using PyHistology
 
@@ -23,7 +24,7 @@ PyHistology is a package for color space segmentation of a user-uploaded 2D RGB 
 
 ### App Overview
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pyhistology.streamlit.app/)
+A web application developed using Streamlit is available at https://pyhistology.streamlit.app/
 
 ![alt text](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg)
 
