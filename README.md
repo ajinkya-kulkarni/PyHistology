@@ -1,4 +1,6 @@
-## Color Space Segmentation using PyHistology
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+# Color Space Segmentation using PyHistology
 
 PyHistology is a package for color space segmentation of a user-uploaded 2D RGB image using the PyHistology package. It uses colorspace-based segmentation to analyze histopathology images. With the help of this package, you can easily calculate the amount of staining present in histopathology images. The application is also available as a Streamlit app and provides an interactive user interface with sliders, file uploaders, and progress bars.
 
