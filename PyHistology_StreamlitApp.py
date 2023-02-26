@@ -76,9 +76,7 @@ st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout =
 
 st.title(':blue[Color space segmentation using PyHistology]')
 
-st.caption('For more information or to give feedback, visit https://github.com/ajinkya-kulkarni/PyHistology.', unsafe_allow_html = False)
-st.caption('For information regarding using this application, visit this screenshot
-st.write("For information regarding using this application, visit this [link](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg)")
+st.caption('For more information or to give feedback, have a look at this [screenshot](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg) or visit https://github.com/ajinkya-kulkarni/PyHistology', unsafe_allow_html = False)
 
 st.markdown("")
 ########################################################################################
