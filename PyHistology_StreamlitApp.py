@@ -28,20 +28,16 @@ import numpy as np
 import cv2
 
 from PIL import Image
-from PIL import ImageColor
 from skimage.color import rgb2gray
 
 import matplotlib.pyplot as plt
 
-import os
 import time
 from io import BytesIO
 
 import sys
-
 # Don't generate the __pycache__ folder locally
 sys.dont_write_bytecode = True 
-
 # Print exception without the buit-in python warning
 sys.tracebacklimit = 0 
 
@@ -79,6 +75,7 @@ st.title(':blue[Color space segmentation using PyHistology]')
 st.caption('For more information, have a look at this [screenshot](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg). Source code available [here](https://github.com/ajinkya-kulkarni/PyHistology).', unsafe_allow_html = False)
 
 st.markdown("")
+
 ########################################################################################
 
 with st.form(key = 'form1', clear_on_submit = False):

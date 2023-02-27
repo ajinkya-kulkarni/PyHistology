@@ -28,6 +28,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
+########################################################################################
+
 def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSIZE):
 	"""
 	Plots the HSV color space using the given image.
