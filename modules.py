@@ -43,7 +43,7 @@ def plot_HSV_space(image_path, xnumber, ynumber, DPI, PAD, FONTSIZE_TITLE, FIGSI
 	FONTSIZE_TITLE (int): The font size of the title.
 
 	Returns:
-	None
+	A figure object fig, which can be passed on later
 	"""
 	# Open the image using PIL and convert it to a numpy array
 	HSV_space_image_raw = Image.open(image_path)
