@@ -194,7 +194,7 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 			################################################################################
 
-			### Calcuate gray scale image
+			### Calcuate gray scale image here
 
 			image_gray = 255 * rgb2gray(raw_image)
 
