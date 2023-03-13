@@ -28,6 +28,7 @@ import numpy as np
 import cv2
 
 from PIL import Image
+from skimage.color import rgb2gray
 
 import matplotlib.pyplot as plt
 
@@ -176,11 +177,15 @@ with st.form(key = 'form1', clear_on_submit = False):
 			ProgressBar.progress(float(3/6))
 
 			################################################################################
-
+                        
+			# Define a binary mask that stores only the pixels from the HSV image which are within the hue, saturation, and brightness range selected by the user.
 			mask = cv2.inRange(HSV_image, LowerBoundNumbers, UpperBoundNumbers)
 
+		        # Count all non-zero pixels in the mask
 			pixels_of_interest = np.count_nonzero(mask)
 
+			# Use bitwiseAND operator to multiply the mask with original HSV image.
+                        # New HSV image will contain pixels which were non-zero pixels in the mask. 
 			output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
 
 			time.sleep(ProgressBarTime)
@@ -193,9 +198,10 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 			################################################################################
 
-			### Calcuate gray scale image
-			image_gray = cv2.cvtColor(raw_image, cv2.COLOR_RGB2GRAY)
-
+			### Convert the RGB image to grayscale 
+			image_gray = 255 * rgb2gray(raw_image)
+                        
+			# Count the number of pixels in the grayscale image that are above the threshold value.  
 			non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
 
 			################################################################################
