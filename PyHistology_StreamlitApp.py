@@ -195,8 +195,8 @@ with st.form(key = 'form1', clear_on_submit = False):
 			################################################################################
 
 			### Calcuate gray scale image here
-
-			image_gray = 255 * rgb2gray(raw_image)
+                        image_gray = cv2.cvtColor(raw_image, cv2.COLOR_RGB2GRAY)
+			#image_gray = 255 * rgb2gray(raw_image)
 
 			non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
 
