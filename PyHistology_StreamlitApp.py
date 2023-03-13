@@ -28,7 +28,6 @@ import numpy as np
 import cv2
 
 from PIL import Image
-from skimage.color import rgb2gray
 
 import matplotlib.pyplot as plt
 
@@ -194,9 +193,8 @@ with st.form(key = 'form1', clear_on_submit = False):
 
 			################################################################################
 
-			### Calcuate gray scale image here
-
-			image_gray = 255 * rgb2gray(raw_image)
+			### Calcuate gray scale image
+			image_gray = cv2.cvtColor(raw_image, cv2.COLOR_RGB2GRAY)
 
 			non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
 
