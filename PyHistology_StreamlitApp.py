@@ -28,7 +28,6 @@ import numpy as np
 import cv2
 
 from PIL import Image
-from skimage.color import rgb2gray
 
 import matplotlib.pyplot as plt
 
@@ -146,7 +145,8 @@ with st.form(key = 'form1', clear_on_submit = False):
 		ProgressBarTime = 0.5
 
 		ThresholdValueKey = int(st.session_state['-ThresholdValueKey-'])
-
+		
+		# Store the hue, saturation and brightness range selected by the user in numpy arrays LoweBoundNumbers and UpperBoundNumbers
 		LowerBoundNumbers =  np.array([LowerHueKey, LowerSaturationKey, LowerValueKey])
 
 		UpperBoundNumbers = np.array([HigherHueKey, HigherSaturationKey, HigherValueKey])
@@ -157,20 +157,24 @@ with st.form(key = 'form1', clear_on_submit = False):
 		################################################################################
 
 		try:
-
+			
+			# Access the file uploaded by the user 
 			raw_image_from_pillow = Image.open(uploaded_file)
-
+			
+			# Make a numpy array composed of the 3-channels of RGB image 
 			raw_image = np.array(raw_image_from_pillow)
 
 			time.sleep(ProgressBarTime)
 			ProgressBar.progress(float(2/6))
-
+			
+			#check if the image is a 3-channel image
 			if raw_image.shape[-1] > 3:
 				ErrorMessage = st.error('Image has more than 3 channels. Please upload an image with 3 channels', icon = None)
 				time.sleep(SleepTime)
 				ErrorMessage.empty()
 				st.stop()
-
+				
+			# Convert the RGB image format to HSV format.
 			HSV_image = cv2.cvtColor(raw_image, cv2.COLOR_RGB2HSV)
 
 			time.sleep(ProgressBarTime)
@@ -181,16 +185,17 @@ with st.form(key = 'form1', clear_on_submit = False):
 			# Define a binary mask that stores only the pixels from the HSV image which are within the hue, saturation, and brightness range selected by the user.
 			mask = cv2.inRange(HSV_image, LowerBoundNumbers, UpperBoundNumbers)
 
-		        # Count all non-zero pixels in the mask
+		    # Count all non-zero pixels in the mask
 			pixels_of_interest = np.count_nonzero(mask)
 
 			# Use bitwiseAND operator to multiply the mask with original HSV image.
-                        # New HSV image will contain pixels which were non-zero pixels in the mask. 
+            # New HSV image will contain pixels which were non-zero pixels in the mask. 
 			output_HSV_image = cv2.bitwise_and(HSV_image, HSV_image, mask = mask)
 
 			time.sleep(ProgressBarTime)
 			ProgressBar.progress(float(4/6))
-
+			
+			# Convert the new HSV image back to RGB format.
 			output_RGB_image = cv2.cvtColor(output_HSV_image, cv2.COLOR_HSV2RGB)
 
 			time.sleep(ProgressBarTime)
@@ -199,13 +204,14 @@ with st.form(key = 'form1', clear_on_submit = False):
 			################################################################################
 
 			### Convert the RGB image to grayscale 
-			image_gray = 255 * rgb2gray(raw_image)
+			image_gray = cv2.cvtColor(raw_image, cv2.COLOR_RGB2GRAY)
                         
 			# Count the number of pixels in the grayscale image that are above the threshold value.  
 			non_white_pixels = np.count_nonzero(image_gray < ThresholdValueKey)
 
 			################################################################################
-
+			
+			# Calculate the percentage of pixel of interest out of the total pixels in the image 
 			percentage_area = np.round(100 * pixels_of_interest / non_white_pixels, 2)
 
 			time.sleep(ProgressBarTime)
