@@ -1,5 +1,6 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pyhistology.streamlit.app/)
+[![DOI](https://zenodo.org/badge/571896104.svg)](https://zenodo.org/badge/latestdoi/571896104)
 
 # Color Space Segmentation using PyHistology
 
