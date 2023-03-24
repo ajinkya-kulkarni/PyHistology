@@ -69,7 +69,7 @@ st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout =
 
 # Title of the web app
 
-st.title(':blue[Color space segmentation using PyHistology]')
+st.title(':blue[Color space segmentation of H&E images]')
 
 st.caption('For more information, have a look at this [screenshot](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/TestImage.png). Source code available [here](https://github.com/ajinkya-kulkarni/PyHistology).', unsafe_allow_html = False)
 
