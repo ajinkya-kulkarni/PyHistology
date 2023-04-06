@@ -27,7 +27,8 @@ PyHistology is a package for color space segmentation of a user-uploaded 2D RGB 
 
 A web application developed using Streamlit is available at https://pyhistology.streamlit.app/
 
-![alt text](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg)
+![alt text](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp1.png)
+![alt text](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp2.png)
 
 ### Usage
 1. Clone the repository or download the source code

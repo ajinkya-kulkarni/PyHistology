@@ -63,7 +63,7 @@ with open("logo.jpg", "rb") as f:
 
 image_bytes = BytesIO(image_data)
 
-st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout = "wide", initial_sidebar_state = "expanded", menu_items = {'Get help': 'mailto:ajinkya.kulkarni@mpinat.mpg.de', 'Report a bug': 'mailto:ajinkya.kulkarni@mpinat.mpg.de', 'About': 'This is a application for demonstrating the PyHistology package. Developed, tested and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni at the MPI-NAT, Goettingen.'})
+st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout = "wide", initial_sidebar_state = "expanded", menu_items = {'About': 'This is a application for demonstrating the PyHistology package. Developed, tested and maintained by Ajinkya Kulkarni: https://github.com/ajinkya-kulkarni at the MPI-NAT, Goettingen.'})
 
 ########################################################################################
 
@@ -71,7 +71,7 @@ st.set_page_config(page_title = 'PyHistology', page_icon = image_bytes, layout =
 
 st.title(':blue[Color space segmentation of H&E images]')
 
-st.caption('For more information, have a look at this [screenshot](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp.jpg). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/TestImage.png). Source code available [here](https://github.com/ajinkya-kulkarni/PyHistology).', unsafe_allow_html = False)
+st.caption('For more information, have a look at this [screenshot](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp1.png) and [screenshot](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/StreamlitApp2.png). Sample image to test this application is available [here](https://github.com/ajinkya-kulkarni/PyHistology/blob/main/TestImage.png). Source code available [here](https://github.com/ajinkya-kulkarni/PyHistology).', unsafe_allow_html = False)
 
 st.markdown("")
 
