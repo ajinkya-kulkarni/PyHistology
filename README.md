@@ -13,7 +13,7 @@ PyHistology is a package for color space segmentation of a user-uploaded 2D RGB 
 - numpy
 - cv2
 - PIL
-- skimage
+- scikit-image
 - matplotlib
 
 ### Installation
