@@ -1,6 +1,10 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pyhistology.streamlit.app/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![DOI](https://zenodo.org/badge/571896104.svg)](https://zenodo.org/badge/latestdoi/571896104)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/ajinkya-kulkarni/PyHistology)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ajinkya-kulkarni/PyHistology)
+![GitHub all releases](https://img.shields.io/github/downloads/ajinkya-kulkarni/PyHistology/total)
+![GitHub language count](https://img.shields.io/github/languages/count/ajinkya-kulkarni/PyHistology)
 
 # Color Space Segmentation using PyHistology
 
